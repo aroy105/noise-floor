@@ -36,7 +36,10 @@ venv/
 .coverage
 htmlcov/
 
-.ipynb_checkpoints/
+.virtual_documents/
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+.jupyter/
 
 logs/
 *.log
