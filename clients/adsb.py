@@ -63,3 +63,19 @@ print(f"Zero NIC: {len(zero_nic)}")
 print(f"Zero NAC_p: {len(zero_nac_p)}")
 print(f"Zero NIC and NAC_p: {len(zero_nic_and_nac_p)}")
 print(f"Present Aircraft: {len(present)}")
+
+# Analyze the ones with Missing values
+for ac in missing_nic:
+    print(f"Lat: {ac["lat"]}, Lon: {ac["lon"]}, Alt_baro: {ac["alt_baro"]}, Version: {ac["version"]}, Flight: {ac["flight"]}")
+for ac in missing_nac_p:
+    print(f"Lat: {ac["lat"]}, Lon: {ac["lon"]}, Alt_baro: {ac["alt_baro"]}, Version: {ac["version"]}, Flight: {ac["flight"]}")
+for ac in missing_nic_and_nac_p:
+    print(f"Lat: {ac["lat"]}, Lon: {ac["lon"]}, Alt_baro: {ac["alt_baro"]}, Version: {ac["version"]}, Flight: {ac["flight"]}")
+for ac in zero_nic:
+    print(f"Lat: {ac["lat"]}, Lon: {ac["lon"]}, Alt_baro: {ac["alt_baro"]}, Version: {ac["version"]}, Flight: {ac["flight"]}")
+for ac in zero_nac_p:
+    print(f"Lat: {ac["lat"]}, Lon: {ac["lon"]}, Alt_baro: {ac["alt_baro"]}, Version: {ac["version"]}, Flight: {ac["flight"]}")
+for ac in zero_nic_and_nac_p:
+    print(f"Lat: {ac["lat"]}, Lon: {ac["lon"]}, Alt_baro: {ac["alt_baro"]}, Version: {ac["version"]}, Flight: {ac["flight"]}")
+
+# Analyze the ones with Zero values
