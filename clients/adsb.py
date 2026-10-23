@@ -1,5 +1,4 @@
 import requests
-import json
 
 base_url = "https://api.adsb.lol"
 
@@ -24,19 +23,19 @@ data = adsb_response(base_url, lat=54.35, lon=18.65, dist=250)
 
 # if field is missing, nic or nac_p not available, so key is ommitted
 # if value = 0, field is present, but integrity or accuracy is unknown/insufficient
-
 # Position can also be calculated by Multilateration (MLAT) rather than GPS, yielding missing nic and nac_p values
 # Air Traffic Control (ATC) uses it by capturing Aircraft 1090 MHz signals, and ground receivers capture signal with time stamp,
 # and a computer uses Time Difference of Arrival to get the exact position. Immune to GNSS jamming
-
 # so only filter for aircraft susceptible to GNSS jamming. Focus just on adsb_icao right now
+# also through exploration we don't want to catch planes that are on the ground so filter for that too
+
 adsb_icao_aircraft_data = []
 missing_nic, missing_nac_p, missing_nic_and_nac_p = [], [], []
 zero_nic, zero_nac_p, zero_nic_and_nac_p = [], [], []
 present = []
 
 for ac in data["ac"]:
-    if ac.get("type") == "adsb_icao":
+    if ac.get("type") == "adsb_icao" and ac.get("alt_baro") != "ground":
         adsb_icao_aircraft_data.append(ac)
         if "nic" not in ac and "nac_p" not in ac:
             missing_nic_and_nac_p.append(ac)
@@ -62,13 +61,13 @@ print(f"Missing NIC and NAC_p: {len(missing_nic_and_nac_p)}")
 print(f"Zero NIC: {len(zero_nic)}")
 print(f"Zero NAC_p: {len(zero_nac_p)}")
 print(f"Zero NIC and NAC_p: {len(zero_nic_and_nac_p)}")
-print(f"Present Aircraft: {len(present)}")
+print(f"Present Aircraft: {len(present)}\n")
 
 def print_location_alt_version_readout(data, data_name):
     if data:
         print(f"Printing {data_name}")
         for ac in data:
-            print(f"Lat: {ac["lat"]}, Lon: {ac["lon"]}, Alt_baro: {ac["alt_baro"]}, Version: {ac["version"]}, Flight: {ac["flight"]}")
+            print(f"Lat: {ac["lat"]}, Lon: {ac["lon"]}, Barometric Altitude: {ac["alt_baro"]}, Version: {ac["version"]}, Flight: {ac["flight"]}")
 
 
 # Analyze the ones with Missing values
