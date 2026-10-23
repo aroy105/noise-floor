@@ -3,11 +3,12 @@ import json
 
 url = "https://api.adsb.lol"
 
-
 # aircraft near gdansk, 250 nautical miles
 suffix = "/v2/lat/54.35/lon/18.65/dist/250"
-
-response = requests.get(url + suffix, timeout=10)
+headers = {
+    "User-Agent": "noisefloor/0.1 aroy105"
+}
+response = requests.get(url + suffix, headers=headers, timeout=10)
 
 response.raise_for_status()
 
